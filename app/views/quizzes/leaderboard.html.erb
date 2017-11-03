@@ -1,0 +1,31 @@
+<div class="row card-panel center">
+	<span class="flow-text"><strong>Leaderboard</strong></span>
+</div>
+<div class="row">
+	<table class="bordered highlight centered">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Name</th>
+				<th>Score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @events.each do |e| %>
+			<% u = User.find(e.user_id) %>
+			<% 
+				if e.user_id == current_user.id
+					cl = "green"
+				else
+					cl = ""
+				end
+			 %>
+			<tr class="<%= cl %>">
+				<td><%= u[:username] %></td>
+				<td><%= u[:name] %></td>
+				<td><%= e[:highscore] %></td>
+			</tr>
+			<% end %> 
+		</tbody>
+	</table>
+</div>

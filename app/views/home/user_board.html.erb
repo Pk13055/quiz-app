@@ -1,0 +1,45 @@
+<div class="row">
+	<div class="card-panel">
+	<span class="flow-text">User Leaderboard - <%= current_user.name %></span>
+	</div>
+</div>
+<% @quizz_collection.each do |key, value| %>
+<div class="row">
+  <div class="row"><h3><%= key %></h3></div>
+  <% if @quizz_collection[key].length == 0 %>
+  <div class="row"><span class="flow-text">No quizzes yet</span></div>
+  <% else %>
+  <% @quizz_collection[key].each do | key2, value2 | %>
+  <div class="row"><h4><%= key2 %></h4></div>
+  <div class="row">
+  <% if @quizz_collection[key][key2].length == 0 %>
+    <div class="card-panel"><span class="flow-text">Nothing to show yet! Hang tight.</span></div>
+    <% else %>
+    <% @quizz_collection[key][key2].each do | quiz | %>
+    <div class="col s12 m4">
+      <div class="card green lighten-2 hoverable">
+        <div class="card-content">
+          <% $event = Event.where(quiz_id: quiz.id, user_id: current_user.id)[0] %>
+          <span class="card-title"><%= quiz.title %></span>
+          <% if not ($event.nil? or ($event[:current_question] == 0 and $event[:highscore] == 0)) %>
+          <p class="flow-text"> Highscore - <%= $event[:highscore] %></p>
+          <p class="flow-text"> Current Score - <%= $event[:score] %></p>
+          <% end %>
+        </div>
+        <div class="card-action">
+          <% if $event.nil? or ($event[:current_question] == 0 and $event[:highscore] == 0) %>
+          <div class="chip red lighten-2">Unattempted</div>
+          <% else %>
+          <div class="chip blue lighten-2">Attempted</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %>
+  <% end %>
+</div>
+<div class="black-text divider"></div>
+<% end %>

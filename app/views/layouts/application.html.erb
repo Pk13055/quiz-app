@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quizapp</title>
+	<%= csrf_meta_tags %>
+
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="grey lighten-2">
+	<nav class="blue accent-2">
+		<div class="nav-wrapper">
+			<a href="/" class="brand-logo center">Quiz App</a>
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+			<% if user_signed_in? %>
+			<ul class="right hide-on-med-and-down">
+				<li><%= current_user.name %></li>
+				<li><%= link_to '<i class="material-icons">exit_to_app</i>'.html_safe, destroy_user_session_path, :method => 'delete' %></li>
+				<% if current_user.isadmin == true %>
+				<li><%= link_to "Admin Panel", rails_admin_path %></li>
+				<li><%= link_to "User Profile", home_leaderboard_path %></li>
+				<% end %>
+
+			</ul>
+			<ul class="side-nav" id="mobile-demo">
+				<li class="black-text  "><%= current_user.name %></li>
+				<li><%= link_to '<i class="material-icons">exit_to_app</i> Sign Out'.html_safe, destroy_user_session_path, :method => 'delete' %></li>
+				<% if current_user.isadmin == true %>
+				<li><%= link_to "Admin Panel", rails_admin_path %></li>
+				<li><%= link_to "User Profile", home_leaderboard_path %></li>
+				<% end %>
+			</ul>
+			<% else %>
+			<ul class="right hide-on-med-and-down">
+				<li>Login</li>
+				<li><%= link_to '<i class="material-icons">forward</i>'.html_safe, new_user_session_path %></li>
+			</ul>
+			<ul class="side-nav" id="mobile-demo">
+				<li><%= link_to '<i class="material-icons">forward</i> Login'.html_safe, new_user_session_path %></li>
+			</ul>
+			<% end %>
+		</div>
+	</nav>
+	<main>
+		<div class="container">
+			<%= yield %>
+		</div>
+	</main>
+	<footer class="page-footer blue accent-2">
+		<div class="container">
+			<div class="row">
+				<span class="left flow-text">Pratik Kamble</span>
+				<span class="right flow-text grey-text">&copy; 2017 Reserved</span>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

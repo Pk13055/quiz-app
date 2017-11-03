@@ -1,0 +1,41 @@
+<div class="row">
+  <h2>Attempt a Quiz</h2> 
+  <p>Or pick up where you left off</p>
+</div> 
+<% @quizz_collection.each do |key, value| %>
+<div class="row">
+  <div class="row"><h3><%= key %></h3></div>
+  <% if @quizz_collection[key].length == 0 %>
+  <div class="row"><span class="flow-text">No quizzes yet</span></div>
+  <% else %>
+  <% @quizz_collection[key].each do | key2, value2 | %>
+  <div class="row"><h4><%= key2 %></h4></div>
+  <div class="row">
+  <% if @quizz_collection[key][key2].length == 0 %>
+    <div class="card-panel"><span class="flow-text">Nothing to show yet! Hang tight.</span></div>
+    <% else %>
+    <% @quizz_collection[key][key2].each do | quiz | %>
+    <div class="col s12 m4">
+      <div class="card green lighten-2 hoverable">
+        <div class="card-content">
+          <span class="card-title"><%= quiz.title %></span>
+          <p><%= quiz.desc %></p>
+        </div>
+        <div class="card-action">
+          <% $event = Event.where(quiz_id: quiz.id, user_id: current_user.id)[0] %>
+          <% if $event.nil? or $event[:current_question] == 0 %>
+          <a href="quizzes/<%= quiz.id %>" class="btn btn-flat">Start</a>
+          <% elsif $event[:current_question] %>
+          <a href="quizzes/<%= quiz.id %>" class="btn btn-flat">Resume</a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %>
+  <% end %>
+</div>
+<div class="black-text divider"></div>
+<% end %>

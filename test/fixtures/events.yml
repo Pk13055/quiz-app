@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 9.99
+  current_question: 9.99
+  last_access: 2017-09-18 01:41:00
+
+two:
+  score: 9.99
+  current_question: 9.99
+  last_access: 2017-09-18 01:41:00

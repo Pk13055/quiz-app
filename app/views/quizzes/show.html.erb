@@ -1,0 +1,36 @@
+<div class="row">
+	<h3><%= @quiz.title %></h3>
+	<span class="right flow-text"> Current Score : <%= @cur_score %></span>
+</div>
+<div class="row">
+	<div class="card">
+		<form method="POST" action="<%= @id %>">
+			<div class="card-content">
+				<p class="flow-text"><%= @question.matter %></p>
+				<% @answers.each do |a| %>
+				<p>
+					<input name="answers[]" type="checkbox" id="<%= a.id %>" multiple="true" value="<%= a.id %>" />
+					<label for="<%= a.id %>"><%= a.matter %></label>
+				</p>
+				<% end %>
+			</div>
+			<div class="card-action">
+				<button type="submit" value="1" class="btn blue accent-1">Submit <i class="material-icons right">send</i></button>
+				<input type="hidden" value="<%= @question.id %>" name="q_id">
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<% flash.each do |type, mesg| %>
+		<% if type == "notice" %>
+			<% if mesg ==  "Correct Answer" %>
+			<div class="card-panel green lighten-2">
+			<% elsif mesg == "Incorrect Answer" %>
+			<div class="card-panel red lighten-2">
+				<span class="flow-text"><%= mesg %></span>
+			</div>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>
